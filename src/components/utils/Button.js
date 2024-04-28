@@ -21,8 +21,8 @@ const Button = ({
   ];
 
   const variantClasses = {
-    primary: ['bg-orange-500', 'hover:bg-orange-700'],
-    secondary: ['bg-gray-500', 'hover:bg-gray-700'],
+    primary: ['bg-orange-600', 'hover:bg-orange-500'],
+    secondary: ['bg-gray-500', 'hover:bg-gray-500'],
   };
 
   const sizeClasses = {

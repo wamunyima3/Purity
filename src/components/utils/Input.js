@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
+import { useTheme } from '../../ThemeContext';
 
 const Input = ({
   type = 'text',
@@ -10,6 +11,8 @@ const Input = ({
   className = '',
   ...restProps
 }) => {
+  const { darkTheme } = useTheme();
+
   const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
@@ -20,6 +23,7 @@ const Input = ({
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter' && type === 'email') {
+      e.preventDefault(); // Prevent form submission
       const passwordInput = document.getElementById('password');
       if (passwordInput) {
         passwordInput.focus();
@@ -38,9 +42,9 @@ const Input = ({
         type={inputType}
         placeholder={placeholder}
         onChange={onChange}
-        className="appearance-none rounded-lg w-full py-2 pl-10 pr-3 border border-gray-300 placeholder-gray-400 text-gray-900 focus:outline-none focus:ring focus:border-blue-500 bg-gray-800"
+        className={`appearance-none rounded-lg w-full py-2 pl-10 pr-3 border border-gray-300 placeholder-gray-400 text-gray-900 focus:outline-none focus:ring focus:border-blue-500 ${darkTheme ? 'bg-gray-800' : 'bg-white'}`} // Apply conditional background color based on the theme
         pattern={regexPattern}
-        style={{ color: "#fff" }}
+        style={{ color: darkTheme ? "#fff" : "#000" }}
         onKeyDown={handleKeyDown}
         {...restProps}
       />
