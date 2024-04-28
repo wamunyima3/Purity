@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FiEye, FiEyeOff } from 'react-icons/fi'; // Import icons
+import { FiEye, FiEyeOff } from 'react-icons/fi';
 
 const Input = ({
   type = 'text',
@@ -12,45 +12,48 @@ const Input = ({
 }) => {
   const [showPassword, setShowPassword] = useState(false);
 
-  const inputClasses = [
-    'border',
-    'rounded',
-    'py-2',
-    'pl-10',
-    'pr-4',
-    'outline-none',
-    'transition',
-    'duration-300',
-    className,
-  ];
+  const togglePasswordVisibility = () => {
+    setShowPassword((prevShowPassword) => !prevShowPassword);
+  };
 
-  const inputWrapperClasses = [
-    'relative',
-    className,
-  ];
+  const inputType = type === 'password' && !showPassword ? 'password' : 'text';
 
-  const handleTogglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter' && type === 'email') {
+      const passwordInput = document.getElementById('password');
+      if (passwordInput) {
+        passwordInput.focus();
+      }
+    }
   };
 
   return (
-    <div className={inputWrapperClasses.join(' ')}>
-      {icon && <span className="absolute inset-y-0 left-0 flex items-center pl-3">{icon}</span>}
+    <div className={`relative ${className}`}>
+      {icon && (
+        <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+          {icon}
+        </div>
+      )}
       <input
-        type={showPassword ? 'text' : type} // Updated here
+        type={inputType}
         placeholder={placeholder}
         onChange={onChange}
-        className={inputClasses.join(' ')}
+        className="appearance-none rounded-lg w-full py-2 pl-10 pr-3 border border-gray-300 placeholder-gray-400 text-gray-900 focus:outline-none focus:ring focus:border-blue-500 bg-gray-800"
+        pattern={regexPattern}
+        style={{ color: "#fff" }}
+        onKeyDown={handleKeyDown}
         {...restProps}
       />
       {type === 'password' && (
-        <button
-          type="button"
-          onClick={handleTogglePasswordVisibility}
-          className="absolute inset-y-0 right-0 flex items-center focus:outline-none"
-        >
-          {showPassword ? <FiEyeOff /> : <FiEye />}
-        </button>
+        <div className="absolute inset-y-0 right-0 flex items-center pr-3">
+          <button type="button" onClick={togglePasswordVisibility}>
+            {showPassword ? (
+              <FiEyeOff className="h-5 w-5 text-gray-500" />
+            ) : (
+              <FiEye className="h-5 w-5 text-gray-500" />
+            )}
+          </button>
+        </div>
       )}
     </div>
   );
