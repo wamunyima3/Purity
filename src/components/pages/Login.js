@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { FiMail, FiLock } from 'react-icons/fi';
+import { Link } from 'react-router-dom';
 import Input from '../utils/Input';
 import Button from '../utils/Button';
 import { RiSunFill, RiMoonFill } from 'react-icons/ri';
 import { useTheme } from '../../ThemeContext';
 import { supabase } from '../utils/supabaseClient';
+import LoadingIndicator from '../utils/LoadingIndicator';
 
 const Login = () => {
   const { darkTheme, toggleTheme } = useTheme();
@@ -43,7 +45,7 @@ const Login = () => {
   return (
     <div className={`flex flex-col items-center justify-center h-full text-white px-4 ${darkTheme ? 'bg-gray-900' : 'bg-gray-100'}`}>
       {/* Loading indicator */}
-      {loading && <div className="h-1 bg-blue-500 w-full absolute top-0 left-0"></div>}
+      {loading && <LoadingIndicator />}
 
       {/* Theme toggle button */}
       <button
@@ -96,9 +98,9 @@ const Login = () => {
         </div>
         {/* Forgot password link */}
         <div className="flex items-center justify-between mb-4">
-          <a href="/forgot-password" className={`text-sm ${darkTheme ? 'text-gray-400 hover:text-gray-200' : 'text-gray-600 hover:text-gray-700'}`}>
+          <Link to="/forgot-password" className={`text-sm ${darkTheme ? 'text-gray-400 hover:text-gray-200' : 'text-gray-600 hover:text-gray-700'}`}>
             Forgot Password?
-          </a>
+          </Link>
           {/* Checkbox for "Keep me signed in" */}
           <label htmlFor="keepSignedIn" className="flex items-center cursor-pointer">
             <input type="checkbox" id="keepSignedIn" className="mr-2 cursor-pointer" />
@@ -111,9 +113,9 @@ const Login = () => {
       {/* Registration link */}
       <p className={`text-sm ${darkTheme ? 'text-gray-400' : 'text-gray-600'} select-none`}>
         New user?{' '}
-        <a href="/register" className={"text-orange-600 hover:text-orange-400"}>
+        <Link to="register" className={"text-orange-600 hover:text-orange-400"}>
           Register here
-        </a>
+        </Link>
       </p>
     </div>
   );
