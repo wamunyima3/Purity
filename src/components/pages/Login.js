@@ -1,28 +1,50 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FiMail, FiLock } from 'react-icons/fi';
 import Input from '../utils/Input';
 import Button from '../utils/Button';
 import { RiSunFill, RiMoonFill } from 'react-icons/ri';
 import { useTheme } from '../../ThemeContext';
-import { createClient } from '@supabase/supabase-js';
+import { supabase } from '../utils/supabaseClient';
 
 const Login = () => {
   const { darkTheme, toggleTheme } = useTheme();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  const supabase = createClient(
-    process.env.REACT_APP_SUPABASE_URL,
-    process.env.REACT_APP_ANON_KEY, 
-  )
-  
+    // Function to handle form submission
+    const signInWithEmail = async () => {
+      try {
+        setLoading(true); // Start loading indicator
+        setError(null); // Clear previous error
+        const { user, error } = await supabase.auth.signIn({
+          email,
+          password,
+        });
+        if (error) {
+          throw error;
+        }
+        // Handle successful login
+      } catch (error) {
+        setError(error.message); // Set error message
+      } finally {
+        setLoading(false); // Stop loading indicator
+      }
+    };
+
   return (
     <div className={`flex flex-col items-center justify-center h-full text-white px-4 ${darkTheme ? 'bg-gray-900' : 'bg-gray-100'}`}>
+      {/* Loading indicator */}
+      {loading && <div className="h-1 bg-blue-500 w-full absolute top-0 left-0"></div>}
+
       {/* Theme toggle button */}
       <button
         className={`fixed bottom-4 right-4 z-10 rounded-full p-2 ${darkTheme ? 'bg-gray-800' : 'bg-orange-600'}`}
         onClick={toggleTheme}
         tabIndex="0" // Ensure keyboard navigation
       >
-        {darkTheme ? <RiSunFill className="text-yellow-400" /> : <RiMoonFill className="text-gray-400" />}
+        {darkTheme ? <RiSunFill className="text-yellow-400" /> : <RiMoonFill className="text-white" />}
       </button>
       {/* Page heading */}
       <h2 className={`text-3xl font-semibold mb-4 ${darkTheme ? 'text-white' : 'text-gray-800'} select-none`}>Welcome back to Purity</h2>
@@ -41,6 +63,7 @@ const Login = () => {
             icon={<FiMail className="text-gray-400" />}
             regexPattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
             className={darkTheme ? "bg-gray-800" : "bg-white border border-gray-300"}
+            onChange={(e) => setEmail(e.target.value)}
             tabIndex="0" // Ensure keyboard navigation
           />
           {/* Error message for invalid email */}
@@ -57,6 +80,7 @@ const Login = () => {
             icon={<FiLock className="text-gray-400" />}
             regexPattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$"
             className={darkTheme ? "bg-gray-800" : "bg-white border border-gray-300"}
+            onChange={(e) => setPassword(e.target.value)}
             tabIndex="0" // Ensure keyboard navigation
           />
           {/* Error message for invalid password */}
@@ -74,7 +98,7 @@ const Login = () => {
           </label>
         </div>
         {/* Login button */}
-        <Button variant="primary" className="w-full mb-4">Login</Button>
+        <Button variant="primary" className="w-full mb-4" onClick={signInWithEmail}>Login</Button>
       </form>
       {/* Registration link */}
       <p className={`text-sm ${darkTheme ? 'text-gray-400' : 'text-gray-600'} select-none`}>
