@@ -13,25 +13,32 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-    // Function to handle form submission
-    const signInWithEmail = async () => {
-      try {
-        setLoading(true); // Start loading indicator
-        setError(null); // Clear previous error
-        const { user, error } = await supabase.auth.signIn({
-          email,
-          password,
-        });
-        if (error) {
-          throw error;
-        }
-        // Handle successful login
-      } catch (error) {
-        setError(error.message); // Set error message
-      } finally {
-        setLoading(false); // Stop loading indicator
+  // Function to handle form submission
+  const signInWithEmail = async (e) => {
+    e.preventDefault();
+    try {
+      setLoading(true); // Start loading indicator
+      setError(null); // Clear previous error
+      
+      if (!email || !password) {
+        throw new Error("Both email and password are required.");
       }
-    };
+      
+      let { data, error } = await supabase.auth.signInWithPassword({
+        email: email,
+        password: password
+      })
+
+      if (error) {
+        throw error;
+      }
+      // Handle successful login
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className={`flex flex-col items-center justify-center h-full text-white px-4 ${darkTheme ? 'bg-gray-900' : 'bg-gray-100'}`}>
@@ -50,8 +57,13 @@ const Login = () => {
       <h2 className={`text-3xl font-semibold mb-4 ${darkTheme ? 'text-white' : 'text-gray-800'} select-none`}>Welcome back to Purity</h2>
       {/* Page description */}
       <p className={`text-lg text-center mb-6 ${darkTheme ? 'text-gray-400' : 'text-gray-700'} select-none`}>Your intelligent project mentor</p>
+      
+      
       {/* Login form */}
-      <form className="w-full max-w-sm select-none">
+      <form className="w-full max-w-sm select-none" onSubmit={signInWithEmail}>
+        {/* Error message */}
+        {error && <div className="bg-red-500 text-white text-center rounded-lg py-2 px-4 mb-4">{error}</div>}
+
         {/* Email input */}
         <div className="mb-4">
           <label htmlFor="email" className="sr-only">Email</label>
@@ -66,8 +78,6 @@ const Login = () => {
             onChange={(e) => setEmail(e.target.value)}
             tabIndex="0" // Ensure keyboard navigation
           />
-          {/* Error message for invalid email */}
-          {/* Note: You can implement error message display logic based on state */}
         </div>
         {/* Password input */}
         <div className="mb-4">
@@ -83,8 +93,6 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
             tabIndex="0" // Ensure keyboard navigation
           />
-          {/* Error message for invalid password */}
-          {/* Note: You can implement error message display logic based on state */}
         </div>
         {/* Forgot password link */}
         <div className="flex items-center justify-between mb-4">
@@ -98,7 +106,7 @@ const Login = () => {
           </label>
         </div>
         {/* Login button */}
-        <Button variant="primary" className="w-full mb-4" onClick={signInWithEmail}>Login</Button>
+        <Button variant="primary" className="w-full mb-4">Login</Button>
       </form>
       {/* Registration link */}
       <p className={`text-sm ${darkTheme ? 'text-gray-400' : 'text-gray-600'} select-none`}>
@@ -110,4 +118,5 @@ const Login = () => {
     </div>
   );
 };
+
 export default Login;

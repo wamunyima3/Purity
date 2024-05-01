@@ -12,6 +12,7 @@ const Input = ({
   ...restProps
 }) => {
   const { darkTheme } = useTheme();
+  const [isValid, setIsValid] = useState(true); // State to track input validity
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -31,6 +32,13 @@ const Input = ({
     }
   };
 
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    const isValidInput = new RegExp(regexPattern).test(value); // Check input validity
+    setIsValid(isValidInput); // Update input validity state
+    onChange(e); // Propagate input change
+  };
+
   return (
     <div className={`relative ${className}`}>
       {icon && (
@@ -41,8 +49,8 @@ const Input = ({
       <input
         type={inputType}
         placeholder={placeholder}
-        onChange={onChange}
-        className={`appearance-none rounded-lg w-full py-2 pl-10 pr-3 border border-gray-300 placeholder-gray-400 text-gray-900 focus:outline-none focus:ring focus:border-blue-500 ${darkTheme ? 'bg-gray-800' : 'bg-white'}`} // Apply conditional background color based on the theme
+        onChange={handleInputChange} // Use the custom change handler
+        className={`appearance-none rounded-lg w-full py-2 pl-10 pr-3 border placeholder-gray-400 text-gray-900 focus:outline-none focus:ring focus:border-blue-500 ${darkTheme ? 'bg-gray-800' : 'bg-white'} ${isValid ? 'border-gray-300' : 'border-red-500'}`} // Apply dynamic error border classes
         pattern={regexPattern}
         style={{ color: darkTheme ? "#fff" : "#000" }}
         onKeyDown={handleKeyDown}

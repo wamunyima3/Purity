@@ -11,11 +11,12 @@ const Button = ({
 }) => {
   const buttonClasses = [
     'inline-block',
-    'text-sm',
+    'text-lg',
     'font-medium',
     'transition',
     'duration-300',
-    'rounded',
+    'rounded-lg',
+    'py-2',
     'text-white',
     className,
   ];
