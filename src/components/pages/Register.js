@@ -20,7 +20,8 @@ const Register = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [gender, setGender] = useState('');
   const [institution, setInstitution] = useState('');
-  const [role, setRole] = useState('student'); // Default to student
+  const [role, setRole] = useState('student');
+  const [username, setUsername] = useState('');
 
   // Function to handle form submission
   const signInWithEmail = async () => {
@@ -99,9 +100,20 @@ const Register = () => {
               id="phone"
               label="Phone Number"
               placeholder="Your phone number"
-              className=' mt-6'
+              className=' mt-3'
               icon={<FiPhone className="text-gray-400" />}
               onChange={(e) => setPhoneNumber(e.target.value)}
+              tabIndex="0" // Ensure keyboard navigation
+            />
+            {/* Username input */}
+            <Input
+              type="text"
+              id="username"
+              label="Username"
+              placeholder="Your username"
+              icon={<FiUser className="text-gray-400" />}
+              className=' mt-3'
+              onChange={(e) => setUsername(e.target.value)}
               tabIndex="0" // Ensure keyboard navigation
             />
           </div>
@@ -162,9 +174,9 @@ const Register = () => {
         <Button variant="primary" className="w-full" onClick={signInWithEmail}>Register</Button>
       </form>
       {/* Login link */}
-      <p className={`text-sm ${darkTheme ? 'text-gray-400' : 'text-gray-600'} select-none`}>
+      <p className={`text-lg mt-4 ${darkTheme ? 'text-gray-400' : 'text-gray-600'} select-none`}>
         Old user?{' '}
-        <Link to="login" className={"text-orange-600 hover:text-orange-400"}>
+        <Link to="/" className={"text-orange-600 hover:text-orange-400"}>
           Login here
         </Link>
       </p>

@@ -111,9 +111,9 @@ const Login = () => {
         <Button variant="primary" className="w-full mb-4">Login</Button>
       </form>
       {/* Registration link */}
-      <p className={`text-sm ${darkTheme ? 'text-gray-400' : 'text-gray-600'} select-none`}>
+      <p className={`text-lg mt-4 ${darkTheme ? 'text-gray-400' : 'text-gray-600'} select-none`}>
         New user?{' '}
-        <Link to="register" className={"text-orange-600 hover:text-orange-400"}>
+        <Link to="register"  className={"text-orange-600 hover:text-orange-400"}>
           Register here
         </Link>
       </p>
