@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './components/pages/Login';
 import Register from './components/pages/Register';
 import ErrorPage from './components/pages/ErrorPage';
-import { ThemeProvider } from './ThemeContext';
 
 export default function App() {
   return (
@@ -12,7 +11,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          {/* Pass error code 404, custom error message, and additional error details */}
+          {/* Pass error message */}
           <Route
             path="*"
             element={

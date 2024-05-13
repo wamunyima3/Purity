@@ -37,7 +37,7 @@ const Input = ({
     const isValidInput = new RegExp(regexPattern).test(value); // Check input validity
     setIsValid(isValidInput); // Update input validity state
     onChange(e); // Propagate input change
-  };
+  };  
 
   return (
     <div className={`relative ${className}`}>
