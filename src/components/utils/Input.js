@@ -23,14 +23,22 @@ const Input = ({
   const inputType = type === 'password' && !showPassword ? 'password' : 'text';
 
   const handleKeyDown = (e) => {
-    if (e.key === 'Enter' && type === 'email') {
-      e.preventDefault(); // Prevent form submission
-      const passwordInput = document.getElementById('password');
-      if (passwordInput) {
-        passwordInput.focus();
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      const inputs = document.querySelectorAll('input, select, textarea');
+      const currentIndex = Array.from(inputs).indexOf(e.target);
+      const nextInput = inputs[currentIndex + 1];
+      if (nextInput) { // Check if there's a next input
+        nextInput.focus();
+      } else {
+        // If there's no next input, submit the form
+        const form = e.target.closest('form');
+        if (form) {
+          form.dispatchEvent(new Event('submit'));
+        }
       }
     }
-  };
+  };  
 
   const handleInputChange = (e) => {
     const value = e.target.value;

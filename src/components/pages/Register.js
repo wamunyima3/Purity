@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { FiMail, FiLock, FiUser, FiPhone, FiMapPin, FiCamera } from 'react-icons/fi';
-import Input from '../utils/Input';
-import Button from '../utils/Button';
 import { RiSunFill, RiMoonFill } from 'react-icons/ri';
 import { useTheme } from '../../ThemeContext';
 import { supabase } from '../utils/supabaseClient';
-import { Link } from 'react-router-dom';
+import Input from '../utils/Input';
+import Button from '../utils/Button';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Register = () => {
+  // State declarations
   const { darkTheme, toggleTheme } = useTheme();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -20,21 +21,27 @@ const Register = () => {
   const [role, setRole] = useState('');
   const [username, setUsername] = useState('');
 
-  //signup
+  // Function to handle profile picture selection
+  const handlePhotoChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setPhoto(URL.createObjectURL(file));
+    }
+  };
+
+  // Function for signup
   const signUpWithEmail = async (e) => {
     e.preventDefault();
     try {
       if (!email || !password || !confirmPassword || !phoneNumber || !gender || !role || !username) {
         throw new Error("All inputs are required.");
       }
-      
-      // Check if passwords match
+
       if (password !== confirmPassword) {
         throw new Error("Passwords do not match");
       }
-      
-      // Show a loading toast before making the request
-      toast.info("Logging in...");
+
+      toast.info("Registering in...");
 
       const { data, error } = await supabase.auth.signUp({
         email: email,
@@ -52,46 +59,40 @@ const Register = () => {
       if (error) {
         throw error;
       }
-  
-      // Handle successful login and access user data
+
       toast.dismiss();
+      setEmail('');
+      setPassword('');
+      setConfirmPassword('');
+      setPhoneNumber('');
+      setGender('');
+      setRole('');
+      setUsername('');
+      setPhoto(null);
       toast.success("Register successful!");
-  
+
       console.log(data.user);
-          
+
     } catch (error) {
       toast.dismiss();
       toast.error(error.message);
-    }
-  };
-  
-
-  // Function to handle profile picture selection
-  const handlePhotoChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setPhoto(URL.createObjectURL(file));
     }
   };
 
   return (
     <div className={`flex flex-col items-center justify-center h-full select-none text-white px-4 ${darkTheme ? 'bg-gray-900' : 'bg-gray-100'}`}>
       <ToastContainer />
-      
-      {/* Theme toggle button */}
+
       <button
         className={`fixed bottom-4 right-4 z-10 rounded-full p-2 ${darkTheme ? 'bg-gray-800' : 'bg-orange-600'}`}
         onClick={toggleTheme}
-        tabIndex="0" /*Ensure keyboard navigation*/>
+        tabIndex="0">
         {darkTheme ? <RiSunFill className="text-yellow-400" /> : <RiMoonFill className="text-white" />}
       </button>
-      
-      {/* Page heading */}
+
       <h2 className={`text-3xl font-semibold mb-4 ${darkTheme ? 'text-white' : 'text-gray-800'} select-none`}>Register</h2>
-      
-      {/* Register form */}
-      <form className="w-full max-w-md flex flex-col space-y-6">
-        {/* Profile picture selection */}
+
+      <form className="w-full max-w-md flex flex-col space-y-6" onSubmit={signUpWithEmail}>
         <div className="relative flex justify-between items-center">
           <input
             type="file"
@@ -110,19 +111,17 @@ const Register = () => {
             )}
           </label>
           <div className="flex flex-col flex-grow">
-            {/* Email input */}
             <Input
               type="email"
               id="email"
               label="Email"
-              placeholder="Your email"
+              placeholder="Email"
               icon={<FiMail className="text-gray-400" />}
               regexPattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
               className={darkTheme ? "bg-gray-800" : "bg-white border border-gray-300"}
               onChange={(e) => setEmail(e.target.value)}
-              tabIndex="0" // Ensure keyboard navigation
+              tabIndex="0"
             />
-            {/* Phone number input */}
             <Input
               type="tel"
               id="phone"
@@ -132,14 +131,12 @@ const Register = () => {
               regexPattern="^\+?[0-9]{1,4}[-\s]?(\d{1,3}[-\s]?)(\(\d{1,4}\)[-.\s]?)?((\d{1,4}[-.\s]?){1,2}\d{1,4}|\d{3,4}[-.\s]?\d{4})$"
               icon={<FiPhone className="text-gray-400" />}
               onChange={(e) => setPhoneNumber(e.target.value)}
-              tabIndex="0" 
+              tabIndex="0"
             />
-
-            {/* Username input */}
             <Input
               id="username"
               label="Username"
-              placeholder="Your username"
+              placeholder="Username"
               icon={<FiUser className="text-gray-400" />}
               className=' mt-3'
               regexPattern="^[a-zA-Z0-9_]{3,20}$"
@@ -149,15 +146,13 @@ const Register = () => {
           </div>
         </div>
 
-        {/* Gender and Role selection */}
         <div className="flex space-x-4">
           <div className="relative flex-grow">
             <select
               id="gender"
               className={`appearance-none rounded-lg w-full py-2 pl-3 pr-10 border focus:outline-none focus:ring focus:border-blue-500 ${darkTheme ? 'bg-gray-800' : 'bg-white text-gray-400'}`}
               onChange={(e) => setGender(e.target.value)}
-              tabIndex="0" // Ensure keyboard navigation
-            >
+              tabIndex="0">
               <option value="" disabled selected hidden>Select Gender</option>
               <option value="male">Male</option>
               <option value="female">Female</option>
@@ -173,8 +168,7 @@ const Register = () => {
               id="role"
               className={`appearance-none rounded-lg w-full py-2 pl-3 pr-10 border focus:outline-none focus:ring focus:border-blue-500 ${darkTheme ? 'bg-gray-800' : 'bg-white text-gray-400'}`}
               onChange={(e) => setRole(e.target.value)}
-              tabIndex="0" // Ensure keyboard navigation
-            >
+              tabIndex="0">
               <option value="" disabled selected hidden>Select Role</option>
               <option value="student">Student/Individual</option>
               <option value="supervisor">Supervisor</option>
@@ -184,19 +178,18 @@ const Register = () => {
             </div>
           </div>
         </div>
-        
-        {/* Password and Confirm Password inputs */}
+
         <div className="flex space-x-4">
           <Input
             type="password"
             id="password"
             label="Password"
-            placeholder="Your password"
+            placeholder="Password"
             icon={<FiLock className="text-gray-400" />}
             regexPattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$"
             className={darkTheme ? "bg-gray-800" : "bg-white border border-gray-300"}
             onChange={(e) => setPassword(e.target.value)}
-            tabIndex="0" // Ensure keyboard navigation
+            tabIndex="0"
           />
           <Input
             type="password"
@@ -207,14 +200,13 @@ const Register = () => {
             regexPattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$"
             className={darkTheme ? "bg-gray-800" : "bg-white border border-gray-300"}
             onChange={(e) => setConfirmPassword(e.target.value)}
-            tabIndex="0" // Ensure keyboard navigation
+            tabIndex="0"
           />
         </div>
- 
-        {/* Register button */}
+
         <Button variant="primary" className="w-full" onClick={signUpWithEmail}>Register</Button>
       </form>
-      {/* Login link */}
+
       <p className={`text-lg mt-4 ${darkTheme ? 'text-gray-400' : 'text-gray-600'} select-none`}>
         Old user?{' '}
         <Link to="/" className={"text-orange-600 hover:text-orange-400"}>
@@ -222,7 +214,7 @@ const Register = () => {
         </Link>
       </p>
     </div>
-  )
-}
+  );
+};
 
 export default Register;

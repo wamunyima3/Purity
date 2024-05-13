@@ -76,7 +76,7 @@ const Login = () => {
             type="email"
             id="email"
             label="Email"
-            placeholder="Your email"
+            placeholder="Email"
             icon={<FiMail className="text-gray-400" />}
             regexPattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
             className={darkTheme ? "bg-gray-800" : "bg-white border border-gray-300"}
@@ -92,7 +92,7 @@ const Login = () => {
             type="password"
             id="password"
             label="Password"
-            placeholder="Your password"
+            placeholder="Password"
             icon={<FiLock className="text-gray-400" />}
             regexPattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$"
             className={darkTheme ? "bg-gray-800" : "bg-white border border-gray-300"}
