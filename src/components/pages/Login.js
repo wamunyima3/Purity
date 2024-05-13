@@ -82,6 +82,7 @@ const Login = () => {
             className={darkTheme ? "bg-gray-800" : "bg-white border border-gray-300"}
             onChange={(e) => setEmail(e.target.value)}
             tabIndex="0" // Ensure keyboard navigation
+            autoComplete="email"
           />
         </div>
 

@@ -61,15 +61,7 @@ const Register = () => {
       }
 
       toast.dismiss();
-      setEmail('');
-      setPassword('');
-      setConfirmPassword('');
-      setPhoneNumber('');
-      setGender('');
-      setRole('');
-      setUsername('');
-      setPhoto(null);
-      toast.success("Register successful!");
+      toast.success(`Email sent to ${email}`);
 
       console.log(data.user);
 
@@ -121,17 +113,19 @@ const Register = () => {
               className={darkTheme ? "bg-gray-800" : "bg-white border border-gray-300"}
               onChange={(e) => setEmail(e.target.value)}
               tabIndex="0"
+              autoComplete="email"
             />
             <Input
               type="tel"
               id="phone"
               label="Phone Number"
-              placeholder="Your phone number"
+              placeholder="Phone number"
               className=' mt-3'
               regexPattern="^\+?[0-9]{1,4}[-\s]?(\d{1,3}[-\s]?)(\(\d{1,4}\)[-.\s]?)?((\d{1,4}[-.\s]?){1,2}\d{1,4}|\d{3,4}[-.\s]?\d{4})$"
               icon={<FiPhone className="text-gray-400" />}
               onChange={(e) => setPhoneNumber(e.target.value)}
               tabIndex="0"
+              autoComplete="tel"
             />
             <Input
               id="username"
@@ -142,6 +136,7 @@ const Register = () => {
               regexPattern="^[a-zA-Z0-9_]{3,20}$"
               onChange={(e) => setUsername(e.target.value)}
               tabIndex="0"
+              autoComplete="username"
             />
           </div>
         </div>
@@ -152,8 +147,9 @@ const Register = () => {
               id="gender"
               className={`appearance-none rounded-lg w-full py-2 pl-3 pr-10 border focus:outline-none focus:ring focus:border-blue-500 ${darkTheme ? 'bg-gray-800' : 'bg-white text-gray-400'}`}
               onChange={(e) => setGender(e.target.value)}
+              defaultValue=""
               tabIndex="0">
-              <option value="" disabled selected hidden>Select Gender</option>
+              <option value="" disabled hidden>Select Gender</option>
               <option value="male">Male</option>
               <option value="female">Female</option>
               <option value="other">Other</option>
@@ -168,8 +164,9 @@ const Register = () => {
               id="role"
               className={`appearance-none rounded-lg w-full py-2 pl-3 pr-10 border focus:outline-none focus:ring focus:border-blue-500 ${darkTheme ? 'bg-gray-800' : 'bg-white text-gray-400'}`}
               onChange={(e) => setRole(e.target.value)}
+              defaultValue=""
               tabIndex="0">
-              <option value="" disabled selected hidden>Select Role</option>
+              <option value="" disabled hidden>Select Role</option>
               <option value="student">Student/Individual</option>
               <option value="supervisor">Supervisor</option>
             </select>
