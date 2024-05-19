@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { FiMail, FiLock } from "react-icons/fi";
 import { FaUser, FaUsers } from "react-icons/fa";
 import { supabase } from "../utils/supabaseClient";
+import { IconSun, IconMoon } from "@tabler/icons-react";
 import {
   TextInput,
   PasswordInput,
@@ -14,13 +15,18 @@ import {
   Button,
   Box,
   Progress,
-  Center,
+  ActionIcon,
+  useMantineColorScheme,
+  useComputedColorScheme,
 } from "@mantine/core";
 import { useInputState } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
 
 const Register = () => {
   const navigate = useNavigate();
+  const { setColorScheme } = useMantineColorScheme();
+  const computedColorScheme = useComputedColorScheme('dark', { getInitialValueInEffect: true });
+
   const signUpWithEmail = async () => {
     try {
       // Show a loading toast before making the request
@@ -99,7 +105,7 @@ const Register = () => {
         /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value)
           ? null
           : "Invalid email",
-      role: (value) => ( !value ? "Invalid role" : null),
+      role: (value) => (!value ? "Invalid role" : null),
       password: () => (strength === 100 ? null : "Invalid password"),
       confirmPassword: (value, values) =>
         value === values.password ? null : "Passwords did not match",
@@ -197,6 +203,30 @@ const Register = () => {
           </Anchor>
         </Text>
       </Container>
+
+      <div className="absolute bottom-0 right-0 m-4">
+        <ActionIcon
+          onClick={() =>
+            setColorScheme(computedColorScheme === "light" ? "dark" : "light")
+          }
+          variant="default"
+          size="xl"
+          aria-label="Toggle color scheme"
+        >
+          <IconSun
+            className={`w-[22px] h-[22px] ${
+              computedColorScheme === "light" ? "hidden" : "block"
+            }`}
+            stroke={1.5}
+          />
+          <IconMoon
+            className={`w-[22px] h-[22px] ${
+              computedColorScheme === "dark" ? "hidden" : "block"
+            }`}
+            stroke={1.5}
+          />
+        </ActionIcon>
+      </div>
     </div>
   );
 };

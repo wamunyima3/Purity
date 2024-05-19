@@ -10,13 +10,20 @@ import {
   Center,
   Box,
   rem,
+  ActionIcon,
+  useMantineColorScheme,
+  useComputedColorScheme,
 } from "@mantine/core";
 import { FiMail } from "react-icons/fi";
 import { IconArrowLeft } from "@tabler/icons-react";
 import { useForm } from "@mantine/form";
 import { useNavigate } from "react-router-dom";
+import { IconSun, IconMoon } from "@tabler/icons-react";
 
 const PasswordReset = () => {
+  const { setColorScheme } = useMantineColorScheme();
+  const computedColorScheme = useComputedColorScheme('dark', { getInitialValueInEffect: true });
+
   const navigate = useNavigate();
   const form = useForm({
     mode: "uncontrolled",
@@ -33,7 +40,7 @@ const PasswordReset = () => {
   });
 
   return (
-    <div className="h-screen flex items-center justify-center select-none">
+    <div className="relative h-screen flex items-center justify-center select-none">
       <Container size={460} my={30}>
         <Title ta="center">Forgot your password?</Title>
         <Text c="dimmed" fz="sm" ta="center">
@@ -82,6 +89,28 @@ const PasswordReset = () => {
           </form>
         </Box>
       </Container>
+
+      <div className="absolute bottom-0 right-0 m-4">
+        <ActionIcon
+          onClick={() => setColorScheme(computedColorScheme === 'light' ? 'dark' : 'light')}
+          variant="default"
+          size="xl"
+          aria-label="Toggle color scheme"
+        >
+          <IconSun
+            className={`w-[22px] h-[22px] ${
+              computedColorScheme === "light" ? "hidden" : "block"
+            }`}
+            stroke={1.5}
+          />
+          <IconMoon
+            className={`w-[22px] h-[22px] ${
+              computedColorScheme === "dark" ? "hidden" : "block"
+            }`}
+            stroke={1.5}
+          />
+        </ActionIcon>
+      </div>
     </div>
   );
 };
