@@ -12,9 +12,13 @@ import {
   Group,
   Button,
   Box,
+  ActionIcon,
+  useMantineColorScheme,
+  useComputedColorScheme,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useState } from "react";
+import { IconSun, IconMoon } from "@tabler/icons-react";
 
 interface FormValues {
   email: string;
@@ -25,6 +29,8 @@ interface FormValues {
 const Login = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const { setColorScheme } = useMantineColorScheme();
+  const computedColorScheme = useComputedColorScheme('dark', { getInitialValueInEffect: true });
 
   const form = useForm<FormValues>({
     initialValues: {
@@ -69,6 +75,26 @@ const Login = () => {
 
   return (
     <div className="h-screen flex items-center justify-center select-none">
+      <ActionIcon
+        onClick={() => setColorScheme(computedColorScheme === 'light' ? 'dark' : 'light')}
+        variant="default"
+        size="xl"
+        aria-label="Toggle color scheme"
+      >
+        <IconSun
+          className={`w-[22px] h-[22px] ${
+            computedColorScheme === "light" ? "hidden" : "block"
+          }`}
+          stroke={1.5}
+        />
+        <IconMoon
+          className={`w-[22px] h-[22px] ${
+            computedColorScheme === "dark" ? "hidden" : "block"
+          }`}
+          stroke={1.5}
+        />
+      </ActionIcon>
+
       <Container size={420} my={40}>
         <Title ta="center">Login</Title>
 
