@@ -21,16 +21,28 @@ import { useNavigate } from "react-router-dom";
 import { IconSun, IconMoon } from "@tabler/icons-react";
 import { useState } from "react";
 import { IconX, IconCheck } from "@tabler/icons-react";
+import { supabase } from "../utils/supabaseClient";
+import { notifications } from "@mantine/notifications";
 
 const PasswordReset = () => {
   const { setColorScheme } = useMantineColorScheme();
+
+  //notification icons
+  const xIcon = <IconX style={{ width: rem(20), height: rem(20) }} />;
+  const checkIcon = <IconCheck style={{ width: rem(20), height: rem(20) }} />;
+
   const computedColorScheme = useComputedColorScheme("dark", {
     getInitialValueInEffect: true,
   });
   const [visible, setVisible] = useState(false); //loading overlay
 
-  const navigate = useNavigate();
-  const form = useForm({
+  const navigate = useNavigate(); // for navigation
+
+  interface FormValues {
+    email: string;
+  }
+
+  const form = useForm<FormValues>({
     mode: "uncontrolled",
     initialValues: {
       email: "",
@@ -43,6 +55,30 @@ const PasswordReset = () => {
           : "Invalid email",
     },
   });
+
+  const resetPassword = async (values: FormValues) => {
+    setVisible(true);
+    try {
+      const { email } = values;
+      const { data, error } = await supabase.auth.resetPasswordForEmail(email);
+
+      if (error) throw error;
+
+      //Go to another page to type password
+      console.log(data);
+
+      navigate("/newPassword");
+    } catch (error: any) {
+      notifications.show({
+        title: "Error!",
+        message: error.message,
+        icon: xIcon,
+        color: "red",
+      });
+    } finally {
+      setVisible(false);
+    }
+  };
 
   return (
     <Box pos="relative">
@@ -60,7 +96,7 @@ const PasswordReset = () => {
           </Text>
 
           <Box maw={340} mx="auto">
-            <form onSubmit={form.onSubmit((values) => console.log(values))}>
+            <form onSubmit={form.onSubmit((values) => resetPassword(values))}>
               <TextInput
                 withAsterisk
                 label="Email"
