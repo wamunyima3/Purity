@@ -3,6 +3,7 @@ import { FiMail, FiLock } from "react-icons/fi";
 import { FaUser, FaUsers } from "react-icons/fa";
 import { supabase } from "../utils/supabaseClient";
 import { IconSun, IconMoon } from "@tabler/icons-react";
+import { IconX, IconCheck } from "@tabler/icons-react";
 import {
   TextInput,
   PasswordInput,
@@ -18,14 +19,20 @@ import {
   ActionIcon,
   useMantineColorScheme,
   useComputedColorScheme,
+  LoadingOverlay,
+  rem,
 } from "@mantine/core";
 import { useInputState } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
+import { useState } from "react";
 
 const Register = () => {
   const navigate = useNavigate();
   const { setColorScheme } = useMantineColorScheme();
-  const computedColorScheme = useComputedColorScheme('dark', { getInitialValueInEffect: true });
+  const computedColorScheme = useComputedColorScheme("dark", {
+    getInitialValueInEffect: true,
+  });
+  const [visible, setVisible] = useState(false); //loading overlay
 
   const signUpWithEmail = async () => {
     try {
@@ -117,117 +124,125 @@ const Register = () => {
   });
 
   return (
-    <div className="h-screen flex items-center justify-center select-none">
-      <Container size={420} my={40}>
-        <Title ta="center">Register</Title>
+    <Box pos="relative">
+      <LoadingOverlay
+        visible={visible}
+        zIndex={1000}
+        overlayProps={{ radius: "sm", blur: 2 }}
+        loaderProps={{ color: "blue", type: "bars" }}
+      />
+      <div className="h-screen flex items-center justify-center select-none">
+        <Container size={420} my={40}>
+          <Title ta="center">Register</Title>
 
-        <Box maw={340} mx="auto">
-          <form onSubmit={form.onSubmit((values) => console.log(values))}>
-            <Group grow>
+          <Box maw={340} mx="auto">
+            <form onSubmit={form.onSubmit((values) => console.log(values))}>
+              <Group grow>
+                <TextInput
+                  withAsterisk
+                  label="Firstname"
+                  placeholder="Firstname"
+                  leftSection={<FaUser />}
+                  key={form.key("firstname")}
+                  {...form.getInputProps("firstname")}
+                  required
+                />
+
+                <TextInput
+                  withAsterisk
+                  label="Surname"
+                  placeholder="Surname"
+                  leftSection={<FaUser />}
+                  key={form.key("surname")}
+                  {...form.getInputProps("surname")}
+                  required
+                />
+              </Group>
+
               <TextInput
                 withAsterisk
-                label="Firstname"
-                placeholder="Firstname"
-                leftSection={<FaUser />}
-                key={form.key("firstname")}
-                {...form.getInputProps("firstname")}
+                label="Email"
+                placeholder="your@email.com"
+                leftSection={<FiMail />}
+                key={form.key("email")}
+                {...form.getInputProps("email")}
                 required
               />
 
-              <TextInput
+              <Select
                 withAsterisk
-                label="Surname"
-                placeholder="Surname"
-                leftSection={<FaUser />}
-                key={form.key("surname")}
-                {...form.getInputProps("surname")}
+                label="Role"
+                placeholder="Pick value"
+                key={form.key("role")}
+                {...form.getInputProps("props")}
+                leftSection={<FaUsers />}
+                data={["Student/Individual", "Supervisor"]}
                 required
               />
-            </Group>
 
-            <TextInput
-              withAsterisk
-              label="Email"
-              placeholder="your@email.com"
-              leftSection={<FiMail />}
-              key={form.key("email")}
-              {...form.getInputProps("email")}
-              required
+              <PasswordInput
+                withAsterisk
+                label="Password"
+                placeholder="Password"
+                leftSection={<FiLock />}
+                key={form.key("password")}
+                {...form.getInputProps("password")}
+                required
+              />
+
+              <Group gap={5} grow mt="4" mb="2">
+                {bars}
+              </Group>
+
+              <PasswordInput
+                withAsterisk
+                label="Confirm Password"
+                placeholder="Confirm password"
+                key={form.key("confirmPassword")}
+                leftSection={<FiLock />}
+                {...form.getInputProps("confirmPassword")}
+                required
+              />
+
+              <Button fullWidth mt="xl" type="submit">
+                Sign up
+              </Button>
+            </form>
+          </Box>
+
+          <Text c="dimmed" size="sm" ta="center" mt={5}>
+            Already have an account?{" "}
+            <Anchor size="sm" component="button" onClick={() => navigate("/")}>
+              Login
+            </Anchor>
+          </Text>
+        </Container>
+
+        <div className="absolute bottom-0 right-0 m-4">
+          <ActionIcon
+            onClick={() =>
+              setColorScheme(computedColorScheme === "light" ? "dark" : "light")
+            }
+            variant="default"
+            size="xl"
+            aria-label="Toggle color scheme"
+          >
+            <IconSun
+              className={`w-[22px] h-[22px] ${
+                computedColorScheme === "light" ? "hidden" : "block"
+              }`}
+              stroke={1.5}
             />
-
-            <Select
-              withAsterisk
-              label="Role"
-              placeholder="Pick value"
-              key={form.key("role")}
-              {...form.getInputProps("props")}
-              leftSection={<FaUsers />}
-              data={["Student/Individual", "Supervisor"]}
-              required
+            <IconMoon
+              className={`w-[22px] h-[22px] ${
+                computedColorScheme === "dark" ? "hidden" : "block"
+              }`}
+              stroke={1.5}
             />
-
-            <PasswordInput
-              withAsterisk
-              label="Password"
-              placeholder="Password"
-              leftSection={<FiLock />}
-              key={form.key("password")}
-              {...form.getInputProps("password")}
-              required
-            />
-
-            <Group gap={5} grow mt="4" mb="2">
-              {bars}
-            </Group>
-
-            <PasswordInput
-              withAsterisk
-              label="Confirm Password"
-              placeholder="Confirm password"
-              key={form.key("confirmPassword")}
-              leftSection={<FiLock />}
-              {...form.getInputProps("confirmPassword")}
-              required
-            />
-
-            <Button fullWidth mt="xl" type="submit">
-              Sign up
-            </Button>
-          </form>
-        </Box>
-
-        <Text c="dimmed" size="sm" ta="center" mt={5}>
-          Already have an account?{" "}
-          <Anchor size="sm" component="button" onClick={() => navigate("/")}>
-            Login
-          </Anchor>
-        </Text>
-      </Container>
-
-      <div className="absolute bottom-0 right-0 m-4">
-        <ActionIcon
-          onClick={() =>
-            setColorScheme(computedColorScheme === "light" ? "dark" : "light")
-          }
-          variant="default"
-          size="xl"
-          aria-label="Toggle color scheme"
-        >
-          <IconSun
-            className={`w-[22px] h-[22px] ${
-              computedColorScheme === "light" ? "hidden" : "block"
-            }`}
-            stroke={1.5}
-          />
-          <IconMoon
-            className={`w-[22px] h-[22px] ${
-              computedColorScheme === "dark" ? "hidden" : "block"
-            }`}
-            stroke={1.5}
-          />
-        </ActionIcon>
+          </ActionIcon>
+        </div>
       </div>
-    </div>
+    </Box>
   );
 };
 
