@@ -124,14 +124,14 @@ const Register = () => {
   });
 
   return (
-    <Box pos="relative">
-      <LoadingOverlay
-        visible={visible}
-        zIndex={1000}
-        overlayProps={{ radius: "sm", blur: 2 }}
-        loaderProps={{ color: "blue", type: "bars" }}
-      />
-      <div className="h-screen flex items-center justify-center select-none">
+    <div className="h-screen flex items-center justify-center select-none">
+      <Box pos="relative">
+        <LoadingOverlay
+          visible={visible}
+          zIndex={1000}
+          overlayProps={{ radius: "sm", blur: 2 }}
+          loaderProps={{ color: "blue", type: "bars" }}
+        />
         <Container size={420} my={40}>
           <Title ta="center">Register</Title>
 
@@ -217,32 +217,32 @@ const Register = () => {
             </Anchor>
           </Text>
         </Container>
+      </Box>
 
-        <div className="absolute bottom-0 right-0 m-4">
-          <ActionIcon
-            onClick={() =>
-              setColorScheme(computedColorScheme === "light" ? "dark" : "light")
-            }
-            variant="default"
-            size="xl"
-            aria-label="Toggle color scheme"
-          >
-            <IconSun
-              className={`w-[22px] h-[22px] ${
-                computedColorScheme === "light" ? "hidden" : "block"
-              }`}
-              stroke={1.5}
-            />
-            <IconMoon
-              className={`w-[22px] h-[22px] ${
-                computedColorScheme === "dark" ? "hidden" : "block"
-              }`}
-              stroke={1.5}
-            />
-          </ActionIcon>
-        </div>
+      <div className="absolute bottom-0 right-0 m-4">
+        <ActionIcon
+          onClick={() =>
+            setColorScheme(computedColorScheme === "light" ? "dark" : "light")
+          }
+          variant="default"
+          size="xl"
+          aria-label="Toggle color scheme"
+        >
+          <IconSun
+            className={`w-[22px] h-[22px] ${
+              computedColorScheme === "light" ? "hidden" : "block"
+            }`}
+            stroke={1.5}
+          />
+          <IconMoon
+            className={`w-[22px] h-[22px] ${
+              computedColorScheme === "dark" ? "hidden" : "block"
+            }`}
+            stroke={1.5}
+          />
+        </ActionIcon>
       </div>
-    </Box>
+    </div>
   );
 };
 

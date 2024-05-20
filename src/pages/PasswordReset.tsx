@@ -46,14 +46,14 @@ const PasswordReset = () => {
   });
 
   return (
-    <Box pos="relative">
-      <LoadingOverlay
-        visible={visible}
-        zIndex={1000}
-        overlayProps={{ radius: "sm", blur: 2 }}
-        loaderProps={{ color: "blue", type: "bars" }}
-      />
-      <div className="relative h-screen flex items-center justify-center select-none">
+    <div className="relative h-screen flex items-center justify-center select-none">
+      <Box pos="relative">
+        <LoadingOverlay
+          visible={visible}
+          zIndex={1000}
+          overlayProps={{ radius: "sm", blur: 2 }}
+          loaderProps={{ color: "blue", type: "bars" }}
+        />
         <Container size={460} my={30}>
           <Title ta="center">Forgot your password?</Title>
           <Text c="dimmed" fz="sm" ta="center">
@@ -88,7 +88,7 @@ const PasswordReset = () => {
                       stroke={1.5}
                     />
                     <Box ml={5} onClick={() => navigate("/")}>
-                      Back to the login page
+                      Login
                     </Box>
                   </Center>
                 </Anchor>
@@ -102,32 +102,32 @@ const PasswordReset = () => {
             </form>
           </Box>
         </Container>
+      </Box>
 
-        <div className="absolute bottom-0 right-0 m-4">
-          <ActionIcon
-            onClick={() =>
-              setColorScheme(computedColorScheme === "light" ? "dark" : "light")
-            }
-            variant="default"
-            size="xl"
-            aria-label="Toggle color scheme"
-          >
-            <IconSun
-              className={`w-[22px] h-[22px] ${
-                computedColorScheme === "light" ? "hidden" : "block"
-              }`}
-              stroke={1.5}
-            />
-            <IconMoon
-              className={`w-[22px] h-[22px] ${
-                computedColorScheme === "dark" ? "hidden" : "block"
-              }`}
-              stroke={1.5}
-            />
-          </ActionIcon>
-        </div>
+      <div className="absolute bottom-0 right-0 m-4">
+        <ActionIcon
+          onClick={() =>
+            setColorScheme(computedColorScheme === "light" ? "dark" : "light")
+          }
+          variant="default"
+          size="xl"
+          aria-label="Toggle color scheme"
+        >
+          <IconSun
+            className={`w-[22px] h-[22px] ${
+              computedColorScheme === "light" ? "hidden" : "block"
+            }`}
+            stroke={1.5}
+          />
+          <IconMoon
+            className={`w-[22px] h-[22px] ${
+              computedColorScheme === "dark" ? "hidden" : "block"
+            }`}
+            stroke={1.5}
+          />
+        </ActionIcon>
       </div>
-    </Box>
+    </div>
   );
 };
 
