@@ -1,5 +1,4 @@
 import {
-  Paper,
   Title,
   Text,
   TextInput,

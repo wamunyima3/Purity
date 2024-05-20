@@ -4,6 +4,7 @@ import { FaUser, FaUsers } from "react-icons/fa";
 import { supabase } from "../utils/supabaseClient";
 import { IconSun, IconMoon } from "@tabler/icons-react";
 import { IconX, IconCheck } from "@tabler/icons-react";
+import { notifications } from "@mantine/notifications";
 import {
   TextInput,
   PasswordInput,
@@ -26,29 +27,73 @@ import { useInputState } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
 import { useState } from "react";
 
+interface FormValues {
+  firstname: string;
+  surname: string;
+  email: string;
+  role: string;
+  password: string;
+}
+
 const Register = () => {
   const navigate = useNavigate();
   const { setColorScheme } = useMantineColorScheme();
+
+  // Notification icons
+  const xIcon = <IconX style={{ width: rem(20), height: rem(20) }} />;
+  const checkIcon = <IconCheck style={{ width: rem(20), height: rem(20) }} />;
+
   const computedColorScheme = useComputedColorScheme("dark", {
     getInitialValueInEffect: true,
   });
-  const [visible, setVisible] = useState(false); //loading overlay
+  const [visible, setVisible] = useState(false); // Loading overlay
 
-  const signUpWithEmail = async () => {
+  const signUpWithEmail = async (values: FormValues) => {
+    setVisible(true);
     try {
-      // Show a loading toast before making the request
-      //login
-      //   const { error, data } = await supabase.auth.signInWithUser({
-      //     email: email,
-      //     password: password
-      //   });
-      //   if (error) {
-      //     throw error;
-      //   }
-      // Handle successful login and access user data
-      //   console.log(data.user);
-    } catch (error) {
-      // Dismiss the loading toast in case of error
+      const { firstname, surname, email, role, password } = values;
+      const { error, data } = await supabase.auth.signUp({
+        email: email,
+        password: password,
+        options: {
+          data: {
+            firstname: firstname,
+            surname: surname,
+            role: role,
+          },
+        },
+      });
+
+      if (error) {
+        throw error;
+      }
+
+      if (data.user) {
+        notifications.show({
+          title: "Success!",
+          message: `An email has been sent to: ${data.user.email}`,
+          icon: checkIcon,
+          color: "green",
+        });
+
+        // This should only happen if email is verified
+        if (data.user.role === "Supervisor") {
+          navigate("/supervisorDashboard");
+        } else {
+          navigate("/dashboard");
+        }
+
+        console.log(data.user);
+      }
+    } catch (error: any) {
+      notifications.show({
+        title: "Error!",
+        message: error.message,
+        icon: xIcon,
+        color: "red",
+      });
+    } finally {
+      setVisible(false);
     }
   };
 
@@ -136,7 +181,7 @@ const Register = () => {
           <Title ta="center">Register</Title>
 
           <Box maw={340} mx="auto">
-            <form onSubmit={form.onSubmit((values) => console.log(values))}>
+            <form onSubmit={form.onSubmit((values) => signUpWithEmail(values))}>
               <Group grow>
                 <TextInput
                   withAsterisk
@@ -174,7 +219,7 @@ const Register = () => {
                 label="Role"
                 placeholder="Pick value"
                 key={form.key("role")}
-                {...form.getInputProps("props")}
+                {...form.getInputProps("role")}
                 leftSection={<FaUsers />}
                 data={["Student/Individual", "Supervisor"]}
                 required
