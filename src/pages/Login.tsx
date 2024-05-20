@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { FiMail, FiLock } from "react-icons/fi";
 import { supabase } from "../utils/supabaseClient";
 import { IconX, IconCheck } from "@tabler/icons-react";
-import { notifications } from "@mantine/notifications";
+import { notifications } from '@mantine/notifications';
 import {
   TextInput,
   PasswordInput,
@@ -36,7 +36,7 @@ const Login = () => {
   const [visible, setVisible] = useState(false); //loading overlay
 
   //notification icons
-  const xIcon = <IconX style={{ width: rem(20), height: rem(20) }} />;
+  const xIcon = <IconX style={{ width: rem(20), height: rem(20)}} />;
   const checkIcon = <IconCheck style={{ width: rem(20), height: rem(20) }} />;
 
   const computedColorScheme = useComputedColorScheme("dark", {
@@ -82,23 +82,22 @@ const Login = () => {
         title: "Error!",
         message: error.message,
         icon: xIcon,
-        color: "red",
-      });
+        color: 'red',
+      })
     } finally {
       setVisible(false);
     }
   };
 
   return (
-    <div className="relative h-screen flex items-center justify-center select-none">
-      <Box pos="relative">
-        <LoadingOverlay
-          visible={visible}
-          zIndex={1000}
-          overlayProps={{ radius: "sm", blur: 2 }}
-          loaderProps={{ color: "blue", type: "bars" }}
-        />
-
+    <Box pos="relative">
+      <LoadingOverlay
+        visible={visible}
+        zIndex={1000}
+        overlayProps={{ radius: "sm", blur: 2 }}
+        loaderProps={{ color: "blue", type: "bars" }}
+      />
+      <div className="relative h-screen flex items-center justify-center select-none">
         <Container size={420} my={40}>
           <Title ta="center">Login</Title>
 
@@ -153,9 +152,7 @@ const Login = () => {
           </Text>
         </Container>
 
-
-      </Box>
-      <div className="absolute bottom-0 right-0 m-4">
+        <div className="absolute bottom-0 right-0 m-4">
           <ActionIcon
             onClick={() =>
               setColorScheme(computedColorScheme === "light" ? "dark" : "light")
@@ -178,7 +175,8 @@ const Login = () => {
             />
           </ActionIcon>
         </div>
-    </div>
+      </div>
+    </Box>
   );
 };
 
