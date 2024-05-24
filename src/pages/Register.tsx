@@ -52,6 +52,7 @@ const Register = () => {
     setVisible(true);
     try {
       const { firstname, surname, email, role, password } = values;
+      //signup
       const { error, data } = await supabase.auth.signUp({
         email: email,
         password: password,
@@ -61,6 +62,10 @@ const Register = () => {
             surname: surname,
             role: role,
           },
+          emailRedirectTo:
+            role === "Supervisor"
+              ? "http://localhost:3000/supervisorDashboard"
+              : "http://localhost:3000/dashboard",
         },
       });
 
@@ -71,17 +76,10 @@ const Register = () => {
       if (data.user) {
         notifications.show({
           title: "Success!",
-          message: `An email has been sent to: ${data.user.email}`,
+          message: `Verify the email sent to: ${data.user.email}`,
           icon: checkIcon,
           color: "green",
         });
-
-        // This should only happen if email is verified
-        if (data.user.role === "Supervisor") {
-          navigate("/supervisorDashboard");
-        } else {
-          navigate("/dashboard");
-        }
 
         console.log(data.user);
       }

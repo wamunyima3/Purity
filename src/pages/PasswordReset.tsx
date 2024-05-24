@@ -60,14 +60,16 @@ const PasswordReset = () => {
     setVisible(true);
     try {
       const { email } = values;
-      const { data, error } = await supabase.auth.resetPasswordForEmail(email);
+      const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: 'http://localhost:3000/newPassword',
+      });
 
       if (error) throw error;
 
       //Go to another page to type password
       console.log(data);
 
-      navigate("/newPassword");
+      // navigate("/newPassword");
     } catch (error: any) {
       notifications.show({
         title: "Error!",

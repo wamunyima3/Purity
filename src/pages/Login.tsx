@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { FiMail, FiLock } from "react-icons/fi";
 import { supabase } from "../utils/supabaseClient";
-import { IconX, IconCheck } from "@tabler/icons-react";
+import { IconX } from "@tabler/icons-react";
 import { notifications } from '@mantine/notifications';
 import {
   TextInput,
@@ -37,7 +37,6 @@ const Login = () => {
 
   //notification icons
   const xIcon = <IconX style={{ width: rem(20), height: rem(20)}} />;
-  const checkIcon = <IconCheck style={{ width: rem(20), height: rem(20) }} />;
 
   const computedColorScheme = useComputedColorScheme("dark", {
     getInitialValueInEffect: true,
@@ -134,7 +133,7 @@ const Login = () => {
                   Forgot password?
                 </Anchor>
               </Group>
-              <Button fullWidth mt="xl" w={340} type="submit">
+              <Button fullWidth mt="xl" w={336} type="submit">
                 Sign in
               </Button>
             </form>
