@@ -61,7 +61,7 @@ const PasswordReset = () => {
     try {
       const { email } = values;
       const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: 'http://localhost:3000/newPassword',
+        redirectTo: 'https://purity-pm.vercel.app/newPassword',
       });
 
       if (error) throw error;

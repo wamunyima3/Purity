@@ -64,8 +64,8 @@ const Register = () => {
           },
           emailRedirectTo:
             role === "Supervisor"
-              ? "http://localhost:3000/supervisorDashboard"
-              : "http://localhost:3000/dashboard",
+              ? "https://purity-pm.vercel.app/supervisorDashboard"
+              : "https://purity-pm.vercel.app/dashboard",
         },
       });
 
