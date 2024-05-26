@@ -26,6 +26,7 @@ import {
 import { useInputState } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
 import { useState } from "react";
+import { getURL } from '../utils/getUrl';
 
 interface FormValues {
   firstname: string;
@@ -64,8 +65,8 @@ const Register = () => {
           },
           emailRedirectTo:
             role === "Supervisor"
-              ? "https://purity-pm.vercel.app/supervisorDashboard"
-              : "https://purity-pm.vercel.app/dashboard",
+              ? `${getURL()}supervisorDashboard`
+              : `${getURL()}dashboard`,
         },
       });
 
