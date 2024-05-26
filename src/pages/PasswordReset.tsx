@@ -23,6 +23,7 @@ import { useState } from "react";
 import { IconX, IconCheck } from "@tabler/icons-react";
 import { supabase } from "../utils/supabaseClient";
 import { notifications } from "@mantine/notifications";
+import { getURL } from '../utils/getUrl';
 
 const PasswordReset = () => {
   const { setColorScheme } = useMantineColorScheme();
@@ -61,18 +62,20 @@ const PasswordReset = () => {
     try {
       const { email } = values;
       const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: "https://purity-pm.vercel.app/newPassword",
+        redirectTo: `${getURL()}reset-password`,
       });
 
       if (error) throw error;
 
-      notifications.show({
-        title: "Success!",
-        message: `Verify the email sent to: ${email}`,
-        icon: checkIcon,
-        color: "green",
-      });
-      
+      if (data) {
+        notifications.show({
+          title: "Success!",
+          message: `Verify the email sent to: ${email}`,
+          icon: checkIcon,
+          color: "green",
+        });
+        
+      }
     } catch (error: any) {
       notifications.show({
         title: "Error!",

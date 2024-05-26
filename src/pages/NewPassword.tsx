@@ -105,7 +105,7 @@ const NewPassword = () => {
     setPasswordValue(value);
   });
 
-  const resetPassword = async (values: FormValues) => {
+  const updatePassword = async (values: FormValues) => {
     setVisible(true);
     try {
       const { password } = values;
@@ -114,6 +114,13 @@ const NewPassword = () => {
       if (error) throw error;
 
       //Go to another page to type password
+      notifications.show({
+        title: "Success!",
+        message: "Password has been updated successfully.",
+        icon: checkIcon,
+        color: "green",
+      });
+      
       console.log(data);
 
       navigate("/");
@@ -145,7 +152,7 @@ const NewPassword = () => {
           </Text>
 
           <Box maw={340} mx="auto">
-            <form onSubmit={form.onSubmit((values) => resetPassword(values))}>
+            <form onSubmit={form.onSubmit((values) => updatePassword(values))}>
             <PasswordInput
                 withAsterisk
                 label="Password"
