@@ -4,15 +4,8 @@ export const getURL = (): string => {
     process.env.NEXT_PUBLIC_VERCEL_URL ??
     'http://localhost:3000/';
 
-  // Ensure the URL starts with 'http'
-  if (!url.includes('http')) {
-    url = `https://${url}`;
-  }
-
-  // Ensure the URL ends with a '/'
-  if (url.charAt(url.length - 1) !== '/') {
-    url = `${url}/`;
-  }
+    url = url.includes('http') ? url : `https://${url}`;
+    url = url.charAt(url.length - 1) === '/' ? url : `${url}/`;
 
   return url;
 };
