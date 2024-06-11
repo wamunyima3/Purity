@@ -1,4 +1,4 @@
-import { AppShell, Burger } from "@mantine/core";
+import { AppShell} from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import Header from "../utils/Header";
 
@@ -14,8 +14,8 @@ const SupervisorDashboard = () => {
       }}
       padding="md"
     >
-      <AppShell.Header>
-        <Header/>
+      <AppShell.Header className="content-center">
+        <Header opened={opened} toggle={toggle} />
       </AppShell.Header>
 
       <AppShell.Navbar p="md">Navbar</AppShell.Navbar>

@@ -6,4 +6,6 @@ declare namespace NodeJS {
       REACT_APP_NEXT_PUBLIC_VERCEL_URL: null;
     }
   }
+
+  declare module '*.jpg'
   

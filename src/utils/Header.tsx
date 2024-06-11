@@ -1,49 +1,125 @@
-import { Autocomplete, Group, Burger, rem } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
-import { IconSearch } from '@tabler/icons-react';
+import {
+  Autocomplete,
+  Group,
+  rem,
+  ActionIcon,
+  useMantineColorScheme,
+  useComputedColorScheme,
+  Text,
+  Image,
+  Anchor,
+  Burger,
+} from "@mantine/core";
+import { IconSun, IconMoon, IconSearch, IconDotsVertical } from "@tabler/icons-react";
+import purityImage from "../images/purity.jpg";
 
 const links = [
-  { link: '/about', label: 'Features' },
-  { link: '/pricing', label: 'Pricing' },
-  { link: '/learn', label: 'Learn' },
-  { link: '/community', label: 'Community' },
+  { link: "/about", label: "Features" },
+  { link: "/pricing", label: "Pricing" },
+  { link: "/learn", label: "Learn" },
+  { link: "/community", label: "Community" },
 ];
 
-const Header = () => {
-  const [opened, { toggle }] = useDisclosure(false);
+interface Props {
+  opened: boolean;
+  toggle: () => void;
+}
+
+const Header = ({ opened, toggle }: Props) => {
+  const { setColorScheme } = useMantineColorScheme();
+  const computedColorScheme = useComputedColorScheme("dark", {
+    getInitialValueInEffect: true,
+  });
 
   const items = links.map((link) => (
-    <a
+    <Anchor
       key={link.label}
       href={link.link}
-      className="block leading-tight p-2 rounded-sm text-gray-700 dark:text-dark-0 text-sm font-medium hover:bg-gray-100 dark:hover:bg-dark-6"
+      underline="hover"
+      className=""
       onClick={(event) => event.preventDefault()}
     >
       {link.label}
-    </a>
+    </Anchor>
   ));
 
   return (
-    <header className="h-[56px] mb-[120px] bg-body border-b-[1px] border-gray-300 dark:border-dark-4 px-md">
-      <div className="h-[56px] flex justify-between items-center">
-        <Group>
-          <Burger opened={opened} onClick={toggle} size="sm" hiddenFrom="sm" />
-          <IconSearch size={28} />
+    <Group justify="space-between" className="px-2">
+      <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
+      <Group className="cursor-pointer" visibleFrom="sm">
+        <Image radius="md" h={30} w="auto" fit="contain" src={purityImage} />
+        <Text size="lg">Project Mentor</Text>
+      </Group>
+
+      <Group>
+        <Autocomplete
+          className="block xs:block"
+          visibleFrom="sm"
+          placeholder="Search"
+          leftSection={
+            <IconSearch
+              style={{ width: rem(16), height: rem(16) }}
+              stroke={1.5}
+            />
+          }
+          data={[
+            "React",
+            "Angular",
+            "Vue",
+            "Next.js",
+            "Riot.js",
+            "Svelte",
+            "Blitz.js",
+          ]}
+        />
+
+        <Group justify="center" visibleFrom="xs">
+          {items}
         </Group>
 
-        <Group>
-          <Group ml={50} gap={5} className="hidden sm:flex">
-            {items}
-          </Group>
-          <Autocomplete
-            className="block xs:block"
-            placeholder="Search"
-            leftSection={<IconSearch style={{ width: rem(16), height: rem(16) }} stroke={1.5} />}
-            data={['React', 'Angular', 'Vue', 'Next.js', 'Riot.js', 'Svelte', 'Blitz.js']}
+        <ActionIcon
+          onClick={() => {}}
+          variant="default"
+          size="lg"
+          aria-label="Search"
+          hiddenFrom="sm"
+        >
+          <IconSearch stroke={1.5} />
+        </ActionIcon>
+
+        <ActionIcon
+          onClick={() =>
+            setColorScheme(computedColorScheme === "light" ? "dark" : "light")
+          }
+          variant="default"
+          size="lg"
+          aria-label="Toggle color scheme"
+        >
+          <IconSun
+            className={`w-[22px] h-[22px] ${
+              computedColorScheme === "light" ? "hidden" : "block"
+            }`}
+            stroke={1.5}
           />
-        </Group>
-      </div>
-    </header>
+          <IconMoon
+            className={`w-[22px] h-[22px] ${
+              computedColorScheme === "dark" ? "hidden" : "block"
+            }`}
+            stroke={1.5}
+          />
+        </ActionIcon>
+
+        <ActionIcon
+          onClick={() => {}}
+          variant="default"
+          size="lg"
+          aria-label="Menu"
+          hiddenFrom="xs"
+        >
+          <IconDotsVertical stroke={1.5} />
+        </ActionIcon>
+      </Group>
+    </Group>
   );
 };
 
