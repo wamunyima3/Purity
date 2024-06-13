@@ -58,7 +58,7 @@ const Footer = () => {
     ));
 
     return (
-      <Flex key={group.title} direction="column">
+      <Flex key={group.title} direction="column" className="mb-4 md:mb-0">
         <Text className="text-xl uppercase mb-2 font-black">{group.title}</Text>
         {links}
       </Flex>
@@ -68,29 +68,23 @@ const Footer = () => {
   return (
     <footer className="pt-5 pb-5 select-none">
       <Container className="mt-5 pt-5 flex flex-col md:flex-row justify-between items-center">
-        <Flex direction="column">
+        <Flex direction="column" className="mb-5 md:mb-0" align="center">
           <Group className="cursor-pointer mb-2">
-            <Image
-              radius="md"
-              h={30}
-              w="auto"
-              fit="contain"
-              src={purityImage}
-            />
+            <Image radius="md" h={30} w="auto" fit="contain" src={purityImage} />
             <Text size="lg" className="ml-2">
               Purity
             </Text>
           </Group>
-          <Text size="xs" className=" text-center md:text-left">
+          <Text size="xs" className="text-center md:text-left">
             Build your final year project easily
           </Text>
         </Flex>
-        <Group justify="center" className="md:mt-10">
+        <Group justify="center" className="md:mt-0 md:ml-10">
           {groups}
         </Group>
       </Container>
       <Container className="mt-5 pt-5 flex flex-col md:flex-row justify-between items-center border-t">
-        <Text className=" text-sm mb-4 md:mb-0">
+        <Text className="text-sm mb-4 md:mb-0">
           © {currentYear} Purity - All rights reserved.
         </Text>
         <Group justify="center">
