@@ -9,23 +9,39 @@ import {
   Image,
   Anchor,
   Burger,
+  Menu,
 } from "@mantine/core";
-import { IconSun, IconMoon, IconSearch, IconDotsVertical } from "@tabler/icons-react";
+import {
+  IconSun,
+  IconMoon,
+  IconSearch,
+  IconDotsVertical,
+} from "@tabler/icons-react";
 import purityImage from "../images/purity.jpg";
+import {
+  IconSettings,
+  IconPhoto,
+  IconMessageCircle,
+  IconTrash,
+  IconArrowsLeftRight,
+} from "@tabler/icons-react";
 
-const links = [
-  { link: "/about", label: "Features" },
-  { link: "/pricing", label: "Pricing" },
-  { link: "/learn", label: "Learn" },
-  { link: "/community", label: "Community" },
-];
-
-interface Props {
-  opened: boolean;
-  toggle: () => void;
+interface Link {
+  link: string;
+  label: string;
 }
 
-const Header = ({ opened, toggle }: Props) => {
+interface Props {
+  side_nav_panel_opened: boolean;
+  side_nav_panel_toggle: () => void;
+  links: Link[];
+}
+
+const Header = ({
+  side_nav_panel_opened,
+  side_nav_panel_toggle,
+  links,
+}: Props) => {
   const { setColorScheme } = useMantineColorScheme();
   const computedColorScheme = useComputedColorScheme("dark", {
     getInitialValueInEffect: true,
@@ -36,7 +52,6 @@ const Header = ({ opened, toggle }: Props) => {
       key={link.label}
       href={link.link}
       underline="hover"
-      className=""
       onClick={(event) => event.preventDefault()}
     >
       {link.label}
@@ -45,10 +60,15 @@ const Header = ({ opened, toggle }: Props) => {
 
   return (
     <Group justify="space-between" className="px-2">
-      <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
+      <Burger
+        opened={side_nav_panel_opened}
+        onClick={side_nav_panel_toggle}
+        hiddenFrom="sm"
+        size="sm"
+      />
       <Group className="cursor-pointer" visibleFrom="sm">
         <Image radius="md" h={30} w="auto" fit="contain" src={purityImage} />
-        <Text size="lg">Project Mentor</Text>
+        <Text size="lg">Purity</Text>
       </Group>
 
       <Group>
@@ -78,16 +98,6 @@ const Header = ({ opened, toggle }: Props) => {
         </Group>
 
         <ActionIcon
-          onClick={() => {}}
-          variant="default"
-          size="lg"
-          aria-label="Search"
-          hiddenFrom="sm"
-        >
-          <IconSearch stroke={1.5} />
-        </ActionIcon>
-
-        <ActionIcon
           onClick={() =>
             setColorScheme(computedColorScheme === "light" ? "dark" : "light")
           }
@@ -109,15 +119,79 @@ const Header = ({ opened, toggle }: Props) => {
           />
         </ActionIcon>
 
-        <ActionIcon
-          onClick={() => {}}
-          variant="default"
-          size="lg"
-          aria-label="Menu"
-          hiddenFrom="xs"
-        >
-          <IconDotsVertical stroke={1.5} />
-        </ActionIcon>
+        <Menu shadow="md" width={200}>
+          <Menu.Target>
+            <ActionIcon
+              onClick={() => {}}
+              variant="default"
+              size="lg"
+              aria-label="Menu"
+              hiddenFrom="xs"
+            >
+              <IconDotsVertical stroke={1.5} />
+            </ActionIcon>
+          </Menu.Target>
+
+          <Menu.Dropdown>
+            <Menu.Label>Application</Menu.Label>
+            <Menu.Item
+              leftSection={
+                <IconSettings style={{ width: rem(14), height: rem(14) }} />
+              }
+            >
+              Settings
+            </Menu.Item>
+            <Menu.Item
+              leftSection={
+                <IconMessageCircle
+                  style={{ width: rem(14), height: rem(14) }}
+                />
+              }
+            >
+              Messages
+            </Menu.Item>
+            <Menu.Item
+              leftSection={
+                <IconPhoto style={{ width: rem(14), height: rem(14) }} />
+              }
+            >
+              Gallery
+            </Menu.Item>
+            <Menu.Item
+              leftSection={
+                <IconSearch style={{ width: rem(14), height: rem(14) }} />
+              }
+              rightSection={
+                <Text size="xs" c="dimmed">
+                  ⌘K
+                </Text>
+              }
+            >
+              Search
+            </Menu.Item>
+
+            <Menu.Divider />
+
+            <Menu.Label>Danger zone</Menu.Label>
+            <Menu.Item
+              leftSection={
+                <IconArrowsLeftRight
+                  style={{ width: rem(14), height: rem(14) }}
+                />
+              }
+            >
+              Transfer my data
+            </Menu.Item>
+            <Menu.Item
+              color="red"
+              leftSection={
+                <IconTrash style={{ width: rem(14), height: rem(14) }} />
+              }
+            >
+              Delete my account
+            </Menu.Item>
+          </Menu.Dropdown>
+        </Menu>
       </Group>
     </Group>
   );
