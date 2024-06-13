@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, Container, ActionIcon, Group, rem, Image } from "@mantine/core";
+import { Text, Container, ActionIcon, Group, rem, Image, Flex } from "@mantine/core";
 import {
   IconBrandTwitter,
   IconBrandYoutube,
@@ -57,8 +57,8 @@ const Footer = () => {
 
   return (
     <footer className="pt-5 pb-5 select-none">
-      <Container className="flex flex-col md:flex-row justify-between items-center">
-        <div className="flex flex-col items-center md:items-start mb-8 md:mb-0">
+      <Group justify="center" gap="xl">
+        <Flex direction="column">
           <Group className="cursor-pointer mb-4">
             <Image radius="md" h={30} w="auto" fit="contain" src={purityImage} />
             <Text size="lg" className="ml-2">Purity</Text>
@@ -66,11 +66,11 @@ const Footer = () => {
           <Text size="xs" className=" text-center md:text-left">
             Build your final year project easily
           </Text>
-        </div>
-        <div className="flex flex-wrap justify-center md:justify-start">
+        </Flex>
+        <Group>
           {groups}
-        </div>
-      </Container>
+        </Group>
+      </Group>
       <Container className="mt-5 pt-5 flex flex-col md:flex-row justify-between items-center border-t">
         <Text className=" text-sm mb-4 md:mb-0">
           © 2024 Purity - Project Mentor. All rights reserved.

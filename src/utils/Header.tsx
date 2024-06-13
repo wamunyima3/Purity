@@ -60,15 +60,16 @@ const Header = ({
 
   return (
     <Group justify="space-between" className="px-2">
-      <Burger
-        opened={side_nav_panel_opened}
-        onClick={side_nav_panel_toggle}
-        hiddenFrom="sm"
-        size="sm"
-      />
-      <Group className="cursor-pointer" visibleFrom="sm">
-        <Image radius="md" h={30} w="auto" fit="contain" src={purityImage} />
-        <Text size="lg">Purity</Text>
+      <Group>
+        <Burger
+          opened={side_nav_panel_opened}
+          onClick={side_nav_panel_toggle}
+          size="sm"
+        />
+        <Group className="cursor-pointer" visibleFrom="sm">
+          <Image radius="md" h={30} w="auto" fit="contain" src={purityImage} />
+          <Text size="lg">Purity</Text>
+        </Group>
       </Group>
 
       <Group>

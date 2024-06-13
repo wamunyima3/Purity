@@ -1,4 +1,4 @@
-import { AppShell, Box } from "@mantine/core";
+import { AppShell, Box, Paper } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import Header from "../utils/Header";
 import Footer from "../utils/Footer";
@@ -19,9 +19,16 @@ const SupervisorDashboard = () => {
       navbar={{
         width: 300,
         breakpoint: "sm",
-        collapsed: { mobile: !opened },
+        collapsed: { mobile: !opened, desktop: !opened },
       }}
       padding="md"
+      styles={(theme) => ({
+        main: {
+          display: "flex",
+          flexDirection: "column",
+          minHeight: "100vh",
+        },
+      })}
     >
       <AppShell.Header className="content-center">
         <Header
@@ -33,11 +40,9 @@ const SupervisorDashboard = () => {
 
       <AppShell.Navbar p="md">Navbar</AppShell.Navbar>
 
-      <AppShell.Main className="relative">
-        <Box className="pb-16">
-          Main Content
-        </Box>
-        <Box pl={300} className="absolute bottom-0 left-0 w-full">
+      <AppShell.Main className="flex-grow">
+        <Paper className="p-4">Content goes here</Paper>
+        <Box className="mt-auto w-full border-t">
           <Footer />
         </Box>
       </AppShell.Main>
