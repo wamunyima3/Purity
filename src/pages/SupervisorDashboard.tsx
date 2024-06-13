@@ -29,6 +29,10 @@ const SupervisorDashboard = () => {
           minHeight: "100vh",
         },
       })}
+      footer={{
+        height: 300,
+        offset: false,
+      }}
     >
       <AppShell.Header className="content-center">
         <Header
@@ -41,7 +45,9 @@ const SupervisorDashboard = () => {
       <AppShell.Navbar p="md">Navbar</AppShell.Navbar>
 
       <AppShell.Main className="flex-grow">
-        <Paper className="p-4">Content goes here</Paper>
+        <Paper className="p-4 mb-10">
+        
+        </Paper>
         <Box className="mt-auto w-full border-t">
           <Footer />
         </Box>

@@ -1,5 +1,13 @@
 import React from "react";
-import { Text, Container, ActionIcon, Group, rem, Image, Flex } from "@mantine/core";
+import {
+  Text,
+  Container,
+  ActionIcon,
+  Group,
+  rem,
+  Image,
+  Flex,
+} from "@mantine/core";
 import {
   IconBrandTwitter,
   IconBrandYoutube,
@@ -26,7 +34,7 @@ const data = [
     title: "Community",
     links: [
       { label: "Join Discord", link: "#" },
-      { label: "GitHub discussions", link: "#" },
+      { label: "GitHub", link: "#" },
     ],
   },
 ];
@@ -48,34 +56,40 @@ const Footer = () => {
     ));
 
     return (
-      <div className="w-40" key={group.title}>
+      <Flex key={group.title} direction="column">
         <Text className="text-xl uppercase mb-2 font-black">{group.title}</Text>
         {links}
-      </div>
+      </Flex>
     );
   });
 
   return (
     <footer className="pt-5 pb-5 select-none">
-      <Group justify="center" gap="xl">
+      <Container className="mt-5 pt-5 flex flex-col md:flex-row justify-between items-center">
         <Flex direction="column">
-          <Group className="cursor-pointer mb-4">
-            <Image radius="md" h={30} w="auto" fit="contain" src={purityImage} />
-            <Text size="lg" className="ml-2">Purity</Text>
+          <Group className="cursor-pointer mb-2">
+            <Image
+              radius="md"
+              h={30}
+              w="auto"
+              fit="contain"
+              src={purityImage}
+            />
+            <Text size="lg" className="ml-2">
+              Purity
+            </Text>
           </Group>
           <Text size="xs" className=" text-center md:text-left">
             Build your final year project easily
           </Text>
         </Flex>
-        <Group>
-          {groups}
-        </Group>
-      </Group>
+        <Group justify="center" className="md:mt-10">{groups}</Group>
+      </Container>
       <Container className="mt-5 pt-5 flex flex-col md:flex-row justify-between items-center border-t">
         <Text className=" text-sm mb-4 md:mb-0">
           © 2024 Purity - Project Mentor. All rights reserved.
         </Text>
-        <Group gap={0} className="flex space-x-4">
+        <Group justify="center">
           <ActionIcon size="lg" color="gray" variant="subtle">
             <IconBrandTwitter
               style={{ width: rem(18), height: rem(18) }}
