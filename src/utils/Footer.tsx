@@ -40,6 +40,8 @@ const data = [
 ];
 
 const Footer = () => {
+  const currentYear = new Date().getFullYear();
+
   const groups = data.map((group) => {
     const links = group.links.map((link, index) => (
       <Text<"a">
@@ -83,11 +85,13 @@ const Footer = () => {
             Build your final year project easily
           </Text>
         </Flex>
-        <Group justify="center" className="md:mt-10">{groups}</Group>
+        <Group justify="center" className="md:mt-10">
+          {groups}
+        </Group>
       </Container>
       <Container className="mt-5 pt-5 flex flex-col md:flex-row justify-between items-center border-t">
         <Text className=" text-sm mb-4 md:mb-0">
-          © 2024 Purity - Project Mentor. All rights reserved.
+          © {currentYear} Purity - All rights reserved.
         </Text>
         <Group justify="center">
           <ActionIcon size="lg" color="gray" variant="subtle">
