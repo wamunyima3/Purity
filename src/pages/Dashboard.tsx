@@ -5,10 +5,9 @@ import Header from "../utils/Header";
 import Footer from "../utils/Footer";
 
 const links = [
-  { link: "/about", label: "Features" },
-  { link: "/pricing", label: "Pricing" },
-  { link: "/learn", label: "Learn" },
-  { link: "/community", label: "Community" },
+  { link: "/projects", label: "Projects" },
+  { link: "/settings", label: "Settings" },
+  { link: "/pointers", label: "Pointers" },
 ];
 
 const Dashboard = () => {

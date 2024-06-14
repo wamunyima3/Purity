@@ -16,16 +16,12 @@ import {
   IconMoon,
   IconSearch,
   IconDotsVertical,
-  IconHome,
-  IconDashboard,
-  IconFileText,
 } from "@tabler/icons-react";
 import purityImage from "../images/purity.jpg";
 import {
   IconSettings,
-  IconPhoto,
+  IconFolder,
   IconMessageCircle,
-  IconTrash,
   IconArrowsLeftRight,
 } from "@tabler/icons-react";
 import {
@@ -46,19 +42,19 @@ const actions: (SpotlightActionGroupData | SpotlightActionData)[] = [
         id: "home",
         label: "Home page",
         description: "Where we present the product",
-        onClick: () => console.log('Home'),
+        onClick: () => console.log("Home"),
       },
       {
         id: "careers",
         label: "Careers page",
         description: "Where we list open positions",
-        onClick: () => console.log('Careers'),
+        onClick: () => console.log("Careers"),
       },
       {
         id: "about-us",
         label: "About us page",
         description: "Where we tell what we do",
-        onClick: () => console.log('About us'),
+        onClick: () => console.log("About us"),
       },
     ],
   },
@@ -175,6 +171,15 @@ const Header = ({
         </Group>
 
         <ActionIcon
+          onClick={() => {}}
+          variant="default"
+          size="lg"
+          aria-label="Chat"
+        >
+          <IconMessageCircle stroke={1.5} />
+        </ActionIcon>
+
+        <ActionIcon
           onClick={() =>
             setColorScheme(computedColorScheme === "light" ? "dark" : "light")
           }
@@ -213,26 +218,19 @@ const Header = ({
             <Menu.Label>Application</Menu.Label>
             <Menu.Item
               leftSection={
-                <IconSettings style={{ width: rem(14), height: rem(14) }} />
-              }
-            >
-              Settings
-            </Menu.Item>
-            <Menu.Item
-              leftSection={
-                <IconMessageCircle
+                <IconArrowsLeftRight
                   style={{ width: rem(14), height: rem(14) }}
                 />
               }
             >
-              Messages
+              Pointers
             </Menu.Item>
             <Menu.Item
               leftSection={
-                <IconPhoto style={{ width: rem(14), height: rem(14) }} />
+                <IconFolder style={{ width: rem(14), height: rem(14) }} />
               }
             >
-              Gallery
+              Projects
             </Menu.Item>
             <Menu.Item
               leftSection={
@@ -248,25 +246,12 @@ const Header = ({
               Search
             </Menu.Item>
 
-            <Menu.Divider />
-
-            <Menu.Label>Danger zone</Menu.Label>
             <Menu.Item
               leftSection={
-                <IconArrowsLeftRight
-                  style={{ width: rem(14), height: rem(14) }}
-                />
+                <IconSettings style={{ width: rem(14), height: rem(14) }} />
               }
             >
-              Transfer my data
-            </Menu.Item>
-            <Menu.Item
-              color="red"
-              leftSection={
-                <IconTrash style={{ width: rem(14), height: rem(14) }} />
-              }
-            >
-              Delete my account
+              Settings
             </Menu.Item>
           </Menu.Dropdown>
         </Menu>
