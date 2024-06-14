@@ -1,5 +1,5 @@
 import {
-  Autocomplete,
+  Input,
   Group,
   rem,
   ActionIcon,
@@ -16,6 +16,9 @@ import {
   IconMoon,
   IconSearch,
   IconDotsVertical,
+  IconHome,
+  IconDashboard,
+  IconFileText,
 } from "@tabler/icons-react";
 import purityImage from "../images/purity.jpg";
 import {
@@ -25,6 +28,62 @@ import {
   IconTrash,
   IconArrowsLeftRight,
 } from "@tabler/icons-react";
+import {
+  Spotlight,
+  SpotlightActionData,
+  SpotlightActionGroupData,
+  spotlight,
+} from "@mantine/spotlight";
+
+{
+  /* spotlight data */
+}
+const actions: (SpotlightActionGroupData | SpotlightActionData)[] = [
+  {
+    group: "Pages",
+    actions: [
+      {
+        id: "home",
+        label: "Home page",
+        description: "Where we present the product",
+        onClick: () => console.log('Home'),
+      },
+      {
+        id: "careers",
+        label: "Careers page",
+        description: "Where we list open positions",
+        onClick: () => console.log('Careers'),
+      },
+      {
+        id: "about-us",
+        label: "About us page",
+        description: "Where we tell what we do",
+        onClick: () => console.log('About us'),
+      },
+    ],
+  },
+
+  {
+    group: "Apps",
+    actions: [
+      {
+        id: "svg-compressor",
+        label: "SVG compressor",
+        description: "Compress SVG images",
+      },
+      {
+        id: "base64",
+        label: "Base 64 converter",
+        description: "Convert data to base 64 format",
+      },
+      {
+        id: "fake-data",
+        label: "Fake data generator",
+        description: "Lorem ipsum generator",
+      },
+    ],
+  },
+];
 
 interface Link {
   link: string;
@@ -60,6 +119,22 @@ const Header = ({
 
   return (
     <Group justify="space-between" className="px-2">
+      {/* spotlight */}
+      <Spotlight
+        actions={actions}
+        nothingFound="Nothing found..."
+        highlightQuery
+        limit={7}
+        searchProps={{
+          leftSection: (
+            <IconSearch
+              style={{ width: rem(20), height: rem(20) }}
+              stroke={1.5}
+            />
+          ),
+          placeholder: "Search...",
+        }}
+      />
       <Group>
         <Burger
           opened={side_nav_panel_opened}
@@ -73,26 +148,27 @@ const Header = ({
       </Group>
 
       <Group>
-        <Autocomplete
-          className="block xs:block"
+        <Input
+          className="select-none block xs:block"
+          component="button"
           visibleFrom="sm"
-          placeholder="Search"
+          w={200}
+          pointer
+          onClick={spotlight.open}
           leftSection={
             <IconSearch
               style={{ width: rem(16), height: rem(16) }}
               stroke={1.5}
             />
           }
-          data={[
-            "React",
-            "Angular",
-            "Vue",
-            "Next.js",
-            "Riot.js",
-            "Svelte",
-            "Blitz.js",
-          ]}
-        />
+          rightSection={
+            <Text size="xs" c="dimmed">
+              ⌘K
+            </Text>
+          }
+        >
+          Search
+        </Input>
 
         <Group justify="center" visibleFrom="xs">
           {items}
@@ -167,6 +243,7 @@ const Header = ({
                   ⌘K
                 </Text>
               }
+              onClick={spotlight.open}
             >
               Search
             </Menu.Item>

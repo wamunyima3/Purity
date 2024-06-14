@@ -45,9 +45,7 @@ const SupervisorDashboard = () => {
       <AppShell.Navbar p="md">Navbar</AppShell.Navbar>
 
       <AppShell.Main className="flex-grow">
-        <Paper className="p-4 mb-10">
-        
-        </Paper>
+        <Paper className="p-4 mb-10"></Paper>
         <Box className="mt-auto w-full border-t">
           <Footer />
         </Box>

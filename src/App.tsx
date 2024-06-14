@@ -1,4 +1,5 @@
 import "@mantine/core/styles.css";
+import '@mantine/spotlight/styles.css';
 import { MantineProvider } from "@mantine/core";
 import { Notifications } from "@mantine/notifications";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";

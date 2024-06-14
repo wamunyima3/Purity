@@ -70,7 +70,13 @@ const Footer = () => {
       <Container className="mt-5 pt-5 flex flex-col md:flex-row justify-between items-center">
         <Flex direction="column" className="mb-5 md:mb-0" align="center">
           <Group className="cursor-pointer mb-2">
-            <Image radius="md" h={30} w="auto" fit="contain" src={purityImage} />
+            <Image
+              radius="md"
+              h={30}
+              w="auto"
+              fit="contain"
+              src={purityImage}
+            />
             <Text size="lg" className="ml-2">
               Purity
             </Text>
