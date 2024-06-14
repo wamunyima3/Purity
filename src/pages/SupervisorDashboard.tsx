@@ -1,13 +1,21 @@
+import React from "react";
 import { AppShell, Box, Paper } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import Header from "../utils/Header";
 import Footer from "../utils/Footer";
+import {
+  IconArrowsLeftRight,
+  IconFolder,
+  IconSettings,
+  IconUserCheck
+} from "@tabler/icons-react";
+import { rem } from "@mantine/core";
 
 const links = [
-  { link: "/about", label: "Features" },
-  { link: "/pricing", label: "Pricing" },
-  { link: "/learn", label: "Learn" },
-  { link: "/community", label: "Community" },
+  { link: "/supervisor", label: "Supervisors", icon: <IconUserCheck style={{ width: rem(14), height: rem(14) }} />  },
+  { link: "/pointers", label: "Pointers", icon: <IconArrowsLeftRight style={{ width: rem(14), height: rem(14) }} /> },
+  { link: "/projects", label: "Projects", icon: <IconFolder style={{ width: rem(14), height: rem(14) }} /> },
+  { link: "/settings", label: "Settings", icon: <IconSettings style={{ width: rem(14), height: rem(14) }} /> },
 ];
 
 const SupervisorDashboard = () => {

@@ -3,11 +3,18 @@ import { AppShell, Box, Paper } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import Header from "../utils/Header";
 import Footer from "../utils/Footer";
+import {
+  IconArrowsLeftRight,
+  IconFolder,
+  IconSettings,
+  IconSearch,
+} from "@tabler/icons-react";
+import { rem } from "@mantine/core";
 
 const links = [
-  { link: "/projects", label: "Projects" },
-  { link: "/settings", label: "Settings" },
-  { link: "/pointers", label: "Pointers" },
+  { link: "/projects", label: "Projects", icon: <IconFolder style={{ width: rem(14), height: rem(14) }} /> },
+  { link: "/settings", label: "Settings", icon: <IconSettings style={{ width: rem(14), height: rem(14) }} /> },
+  { link: "/pointers", label: "Pointers", icon: <IconArrowsLeftRight style={{ width: rem(14), height: rem(14) }} /> },
 ];
 
 const Dashboard = () => {

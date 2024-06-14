@@ -18,12 +18,7 @@ import {
   IconDotsVertical,
 } from "@tabler/icons-react";
 import purityImage from "../images/purity.jpg";
-import {
-  IconSettings,
-  IconFolder,
-  IconMessageCircle,
-  IconArrowsLeftRight,
-} from "@tabler/icons-react";
+import { IconMessageCircle } from "@tabler/icons-react";
 import {
   Spotlight,
   SpotlightActionData,
@@ -31,9 +26,6 @@ import {
   spotlight,
 } from "@mantine/spotlight";
 
-{
-  /* spotlight data */
-}
 const actions: (SpotlightActionGroupData | SpotlightActionData)[] = [
   {
     group: "Pages",
@@ -58,7 +50,6 @@ const actions: (SpotlightActionGroupData | SpotlightActionData)[] = [
       },
     ],
   },
-
   {
     group: "Apps",
     actions: [
@@ -84,6 +75,7 @@ const actions: (SpotlightActionGroupData | SpotlightActionData)[] = [
 interface Link {
   link: string;
   label: string;
+  icon?: React.ReactNode;
 }
 
 interface Props {
@@ -113,9 +105,14 @@ const Header = ({
     </Anchor>
   ));
 
+  const menuItems = links.map((link) => (
+    <Menu.Item key={link.label} leftSection={link.icon}>
+      {link.label}
+    </Menu.Item>
+  ));
+
   return (
     <Group justify="space-between" className="px-2">
-      {/* spotlight */}
       <Spotlight
         actions={actions}
         nothingFound="Nothing found..."
@@ -215,23 +212,9 @@ const Header = ({
           </Menu.Target>
 
           <Menu.Dropdown>
-            <Menu.Label>Application</Menu.Label>
-            <Menu.Item
-              leftSection={
-                <IconArrowsLeftRight
-                  style={{ width: rem(14), height: rem(14) }}
-                />
-              }
-            >
-              Pointers
-            </Menu.Item>
-            <Menu.Item
-              leftSection={
-                <IconFolder style={{ width: rem(14), height: rem(14) }} />
-              }
-            >
-              Projects
-            </Menu.Item>
+            <Menu.Label>Purity</Menu.Label>
+            {menuItems}
+
             <Menu.Item
               leftSection={
                 <IconSearch style={{ width: rem(14), height: rem(14) }} />
@@ -244,14 +227,6 @@ const Header = ({
               onClick={spotlight.open}
             >
               Search
-            </Menu.Item>
-
-            <Menu.Item
-              leftSection={
-                <IconSettings style={{ width: rem(14), height: rem(14) }} />
-              }
-            >
-              Settings
             </Menu.Item>
           </Menu.Dropdown>
         </Menu>
