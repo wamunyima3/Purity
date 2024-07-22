@@ -26,7 +26,7 @@ import {
 import { useInputState } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
 import { useState } from "react";
-import { getURL } from '../utils/getUrl';
+import { getURL } from "../utils/getUrl";
 
 interface FormValues {
   firstname: string;
@@ -127,8 +127,8 @@ const Register = () => {
           value.length > 0 && index === 0
             ? 100
             : strength >= ((index + 1) / 4) * 100
-            ? 100
-            : 0
+              ? 100
+              : 0
         }
         color={strength > 80 ? "teal" : strength > 50 ? "yellow" : "red"}
         key={index}
