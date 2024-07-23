@@ -1,5 +1,5 @@
-import React from "react";
-import { AppShell, Box, Paper } from "@mantine/core";
+import { AppShell, Box, Button, Title } from "@mantine/core";
+import '@mantine/tiptap/styles.css';
 import { useDisclosure } from "@mantine/hooks";
 import Header from "../utils/Header";
 import Footer from "../utils/Footer";
@@ -7,14 +7,19 @@ import {
   IconArrowsLeftRight,
   IconFolder,
   IconSettings,
-  IconSearch,
+  IconVideo,
+  IconImageInPicture,
+  IconChartBar,
+  IconChartArea,
+  IconTable,
+  IconPlus,
+  IconPhoto,
 } from "@tabler/icons-react";
 import { rem } from "@mantine/core";
 
-import { Link, RichTextEditor } from '@mantine/tiptap';
-import { FloatingMenu, EditorContent,useEditor } from '@tiptap/react';
+import { Link, RichTextEditor, useRichTextEditorContext } from '@mantine/tiptap';
+import { BubbleMenu, FloatingMenu, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
-import '@mantine/tiptap/styles.css';
 import Underline from '@tiptap/extension-underline';
 import TextAlign from '@tiptap/extension-text-align';
 import Superscript from '@tiptap/extension-superscript';
@@ -25,7 +30,8 @@ import Dropcursor from '@tiptap/extension-dropcursor'
 import Image from '@tiptap/extension-image'
 import Paragraph from '@tiptap/extension-paragraph'
 import Text from '@tiptap/extension-text'
-import { useCallback } from 'react'
+import ListItem from '@tiptap/extension-list-item'
+import BulletList from '@tiptap/extension-bullet-list'
 
 
 const links = [
@@ -43,21 +49,24 @@ const Dashboard = () => {
 
   const editor = useEditor({
     extensions: [
+      ListItem,
+      BulletList,
       StarterKit,
       Underline,
       Link,
       Superscript,
       SubScript,
       Highlight,
-      Document, 
-      Paragraph, 
-      Text, 
-      Image, 
+      Document,
+      Paragraph,
+      Text,
+      Image,
       Dropcursor,
       TextAlign.configure({ types: ['heading', 'paragraph'] }),
     ],
     content: content,
   });
+
 
   // const addImage = useCallback(() => {
   //   const url = window.prompt('URL')
@@ -71,7 +80,7 @@ const Dashboard = () => {
     new Promise((resolve, reject) => {
       const formData = new FormData();
       formData.append('image', file);
-  
+
       fetch('https://api.imgbb.com/1/upload?key=api_key', {
         method: 'POST',
         body: formData,
@@ -85,6 +94,11 @@ const Dashboard = () => {
   return (
     <AppShell
       header={{ height: 60 }}
+      aside={{
+        width: 300,
+        breakpoint: "lg",
+        collapsed: { mobile: true},
+      }}
       navbar={{
         width: 300,
         breakpoint: "sm",
@@ -110,7 +124,14 @@ const Dashboard = () => {
         />
       </AppShell.Header>
 
-      <AppShell.Navbar p="md">Navbar</AppShell.Navbar>
+      <AppShell.Navbar p="md">
+        List of project proposals
+        <Button fullWidth leftSection={<IconPlus stroke={1.5} size="1rem"/>} mt={20}>New Proposal</Button>
+      </AppShell.Navbar>
+
+      <AppShell.Aside p="md">
+        <Title order={4}>Table of contents</Title>
+      </AppShell.Aside>
 
       <AppShell.Main className="flex-grow">
         <RichTextEditor editor={editor} className="p-5">
@@ -123,6 +144,17 @@ const Dashboard = () => {
               </RichTextEditor.ControlsGroup>
             </FloatingMenu>
           )}
+
+          {editor && (
+            <BubbleMenu editor={editor}>
+              <RichTextEditor.ControlsGroup>
+                <RichTextEditor.Bold />
+                <RichTextEditor.Italic />
+                <RichTextEditor.Link />
+              </RichTextEditor.ControlsGroup>
+            </BubbleMenu>
+          )}
+
           <RichTextEditor.Toolbar sticky stickyOffset={60} >
             <RichTextEditor.ControlsGroup>
               <RichTextEditor.Bold />
@@ -132,6 +164,7 @@ const Dashboard = () => {
               <RichTextEditor.ClearFormatting />
               <RichTextEditor.Highlight />
               <RichTextEditor.Code />
+              <RichTextEditor.CodeBlock />
             </RichTextEditor.ControlsGroup>
 
             <RichTextEditor.ControlsGroup>
@@ -167,6 +200,37 @@ const Dashboard = () => {
               <RichTextEditor.Redo />
             </RichTextEditor.ControlsGroup>
 
+            <RichTextEditor.ControlsGroup>
+
+              <RichTextEditor.Control
+                onClick={() => editor?.commands.insertContent('⭐')}
+                aria-label="Insert star emoji"
+                title="Insert star emoji">
+                <IconVideo stroke={1.5} size="1rem" />
+              </RichTextEditor.Control>
+
+              <RichTextEditor.Control
+                onClick={() => editor?.commands.insertContent('⭐')}
+                aria-label="Insert star emoji"
+                title="Insert star emoji">
+                <IconPhoto stroke={1.5} size="1rem" />
+              </RichTextEditor.Control>
+
+              <RichTextEditor.Control
+                onClick={() => editor?.commands.insertContent('⭐')}
+                aria-label="Insert star emoji"
+                title="Insert star emoji">
+                <IconChartArea stroke={1.5} size="1rem" />
+              </RichTextEditor.Control>
+
+              <RichTextEditor.Control
+                onClick={() => editor?.commands.insertContent('⭐')}
+                aria-label="Insert star emoji"
+                title="Insert star emoji">
+                <IconTable stroke={1.5} size="1rem" />
+              </RichTextEditor.Control>
+
+            </RichTextEditor.ControlsGroup>
           </RichTextEditor.Toolbar>
           <RichTextEditor.Content p={5} />
         </RichTextEditor>
